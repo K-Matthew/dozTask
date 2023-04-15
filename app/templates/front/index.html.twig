@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Characters from Rick & Morty{% endblock %}
+
+{% block body %}
+<style>
+    body { background-color: #e0e2e4}
+    a {color: white; text-decoration: none;}
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .characterBlock { margin-bottom: 5%; background-color: #82b74b; 
+                    height: 100%; border: 2px solid black; 
+                    border-radius: 100px 20px; padding: 10px}
+    .center {text-align: center}
+    .imgRadious {border-radius: 50%;}
+    .myButtonLeft {float: left; background-color:#04AA6D; padding: 10px; border-radius: 10px;}
+    .myButtonRight {float: right; background-color:#04AA6D; padding: 10px; border-radius: 10px;}           
+</style>
+
+<div class="example-wrapper">
+    <h1 class="center">Characters from Rick & Morty</h1>
+
+    {% for character in characters %}
+        <div id="CharactersApiId{{character.apiId}}" class="characterBlock">
+            <div class="center">
+                <img src="{{character.avatar}}" alt="Avatar_{{character.apiId}}" class="imgRadious">
+            </div>
+            <div class="center">
+                {{character.name}}
+            </div>
+            <div>
+                List of episode:
+                <ul>    
+                {% for episode in character.episodes %}
+                    <li>{{episode.name}}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% if pagination['prev']|length %}
+        <div class="myButtonLeft">
+            <a class="myButton" href="{{ path('app_front', {'page': pagination['prev']}) }}">Previous</a>
+        </div>
+    {% endif %}
+
+    {% if pagination['next']|length %}
+        <div class="myButtonRight">
+            <a  href="{{ path('app_front', {'page': pagination['next']}) }}">Next</a>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
